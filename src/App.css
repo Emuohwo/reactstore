@@ -1,4 +1,29 @@
-.App {
+:root {
+  --mainBlue: #2a2a72;
+  --lightBlue: #009ffd;
+  --lightWhite: #f0f0f3;
+  --darkGreen: #19f161;
+}
+
+body {
+font-family: 'Merriweather Sans', sans-serif !important;
+background: var(--lightWhite) !important;
+color: var(--darkGreen) !important;
+}
+
+.text-title {
+  font-family: 'Lobster', cursive;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+}
+.text-blue {
+  color: var(--mainBlue);
+}
+.text-bright{
+  color: var(--lightBlue);
+}
+
+/* .App {
   text-align: center;
 }
 
@@ -30,4 +55,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
