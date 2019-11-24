@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProductConsumer } from './Context';
+import PropTypes from 'prop-types';
 
 export default class Product extends Component {
   render() {
@@ -9,17 +10,29 @@ export default class Product extends Component {
     return (
       <ProductContainer className="col-9 mx-auto col-md-6 col-lg-3 my-3"> 
         <div className="card">
-          <div className="img-container p-5" onClick={() => console.log('hey, you click the image container')}>
-              
-              <Link to="/details">
-                <img src={img} alt="product" className="card-img-top" />
-              </Link>
-              <button className="card-btn" disabled={inCart ? true : false} onClick={() => console.log('added to cart')}>
-                {inCart?(<p className="text-capitalize mb-0" disabled>
-                  in Cart
-                </p>): <i className="fa fa-cart-plus"></i>}
-              </button>
-          </div>
+          <ProductConsumer>
+            {(value)=> (
+            <div className="img-container p-5" 
+              onClick={() => 
+                value.handleDetail(id)
+              }
+            >
+                
+                <Link to="/details">
+                  <img src={img} alt="product" className="card-img-top" />
+                </Link>
+                <button className="card-btn" disabled={inCart ? true : false} 
+                  onClick={() => 
+                    value.addToCart(id) 
+                  }
+                  >
+                  {inCart?(<p className="text-capitalize mb-0" disabled>
+                    in Cart
+                  </p>): <i className="fa fa-cart-plus"></i>}
+                </button>
+            </div>
+            )}
+          </ProductConsumer>
           {/* {card footer} */}
           <div className="card-footer d-flex justify-content-between">
             <p className="align-self-center mb-0">{title}</p>
@@ -32,6 +45,16 @@ export default class Product extends Component {
       </ProductContainer>
     );
   }
+}
+
+Product.propTypes = {
+  product:PropTypes.shape({
+    id:PropTypes.number,
+    img:PropTypes.string,
+    title:PropTypes.string,
+    price:PropTypes.number,
+    inCart:PropTypes.bool
+  }).isRequired
 }
 
 const ProductContainer = styled.div`
