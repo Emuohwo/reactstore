@@ -77,8 +77,26 @@ const ProductContext = React.createContext();
     
   };
   removeItem = (id) => {
-    console.log('Item removed');
-    
+    let tempProducts = [...this.state.products];
+    let tempCart =  [...this.state.cart];
+
+    tempCart = tempCart.filter(item => item.id !== id);
+
+    const index = tempProducts.indexOf(this.getItem(id));
+    let removedPrdduct = tempProducts[index];
+    removedPrdduct.inCart = false;
+    removedPrdduct.count = 0;
+    removedPrdduct.total = 0;
+
+    this.setState(() =>{
+      return {
+        cart:[...tempCart],
+        products:[...tempProducts]
+      }
+    },
+    () => {
+      this.addTotals();
+    })
   };
   clearCart = () => {
     this.setState(() => {
